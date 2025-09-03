@@ -10,7 +10,8 @@ SECRET_KEY = 'django-insecure-CHANGE_THIS_IN_PRODUCTION'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '92.112.184.107', 'template.agromarkers.com.br', *]
+#ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '92.112.184.107', 'template.agromarkers.com.br']
+ALLOWED_HOSTS = [*]
 
 # Add HTTPS to trusted origins
 CSRF_TRUSTED_ORIGINS = [
