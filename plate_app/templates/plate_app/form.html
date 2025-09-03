@@ -1,0 +1,87 @@
+{% extends "plate_app/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="header">
+    <h1>Gerador de Template de Placas</h1>
+    <p class="lead">Preencha os campos abaixo para gerar o PDF de template de placas</p>
+</div>
+
+<div class="form-container">
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <form method="post" novalidate>
+        {% csrf_token %}
+        
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.empresa|as_crispy_field }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.projeto|as_crispy_field }}
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.total_amostras|as_crispy_field }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.email|as_crispy_field }}
+            </div>
+        </div>
+        
+        <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">Gerar PDF</button>
+        </div>
+    </form>
+</div>
+
+<div class="mt-4 text-center">
+    <p>O PDF será gerado e enviado para o email informado.</p>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Script para validação em tempo real dos campos
+    document.addEventListener('DOMContentLoaded', function() {
+        const empresaInput = document.getElementById('id_empresa');
+        
+        if (empresaInput) {
+            empresaInput.addEventListener('input', function() {
+                // Limita a 3 caracteres
+                if (this.value.length > 3) {
+                    this.value = this.value.slice(0, 3);
+                }
+                
+                // Permite apenas números
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+        }
+        
+        const totalAmostrasInput = document.getElementById('id_total_amostras');
+        
+        if (totalAmostrasInput) {
+            totalAmostrasInput.addEventListener('change', function() {
+                const min = 90;
+                const max = 40000;
+                
+                if (this.value < min) {
+                    this.value = min;
+                } else if (this.value > max) {
+                    this.value = max;
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

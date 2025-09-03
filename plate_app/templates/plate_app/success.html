@@ -1,0 +1,38 @@
+{% extends "plate_app/base.html" %}
+
+{% block content %}
+<div class="header">
+    <h1>Solicitação Enviada com Sucesso!</h1>
+</div>
+
+<div class="form-container text-center">
+    <div class="alert alert-success mb-4" role="alert">
+        <h4 class="alert-heading">Seu PDF foi gerado!</h4>
+        <p>O arquivo PDF do template de placas foi gerado com sucesso e enviado para o email: <strong>{{ email }}</strong></p>
+        <hr>
+        <p class="mb-0">Confira sua caixa de entrada e pasta de spam.</p>
+    </div>
+    
+    <div class="mt-4">
+        <h5>Detalhes da Solicitação:</h5>
+        <ul class="list-group mb-4">
+            <li class="list-group-item">Código da Empresa: <strong>{{ empresa }}</strong></li>
+            <li class="list-group-item">Código do Projeto: <strong>{{ projeto }}</strong></li>
+            <li class="list-group-item">Total de Amostras: <strong>{{ total_amostras }}</strong></li>
+            <li class="list-group-item">Código de Envio: <strong>{{ cod_envio }}</strong></li>
+        </ul>
+    </div>
+    
+    <div class="mt-4 mb-4">
+        <a href="{% url 'download_pdf' cod_envio %}" class="btn btn-primary">Baixar Template PDF</a>
+    </div>
+    
+    <div class="alert alert-info" role="alert">
+        <p>Se tiver problemas com o download, você pode solicitar uma cópia do template por email: <a href="mailto:contato@agromarkers.com.br">contato@agromarkers.com.br</a></p>
+    </div>
+    
+    <div class="mt-4">
+        <a href="{% url 'plate_form' %}" class="btn btn-outline-primary">Gerar Novo Template</a>
+    </div>
+</div>
+{% endblock %}
